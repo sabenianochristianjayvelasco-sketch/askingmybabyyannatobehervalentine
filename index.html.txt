@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Be My Valentine 💖</title>
+
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #ff758c, #ffb199);
+    text-align: center;
+    color: white;
+    overflow: hidden;
+  }
+
+  .card {
+    background: rgba(0,0,0,0.25);
+    padding: 25px;
+    border-radius: 20px;
+    max-width: 380px;
+    position: relative;
+  }
+
+  img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 15px;
+    margin-bottom: 10px;
+    border: 2px solid white;
+  }
+
+  button {
+    margin: 10px;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  .yes {
+    background: #ff4d6d;
+    color: white;
+  }
+
+  .no {
+    background: white;
+    color: #ff4d6d;
+    position: absolute;
+  }
+
+  #countdown {
+    margin-top: 10px;
+    font-size: 14px;
+  }
+
+  .heart {
+    position: fixed;
+    font-size: 20px;
+    animation: float 3s linear forwards;
+  }
+
+  @keyframes float {
+    from { transform: translateY(0); opacity: 1; }
+    to { transform: translateY(-200px); opacity: 0; }
+  }
+</style>
+</head>
+
+<body>
+
+<!-- MUSIC (change file) -->
+<audio id="bgMusic" src="YOUR_MUSIC_FILE.mp3"></audio>
+
+<div class="card">
+  <!-- YOUR PICTURE -->
+  <img src="YOUR_PICTURE.jpg" alt="us">
+
+  <h1>Hi [nickname] 😊</h1>
+  <p>Road to 6 months already ✨</p>
+  <p>And I still feel lucky every day.</p>
+
+  <h2>Will you be my Valentine? 💖</h2>
+
+  <button class="yes" onclick="yesClicked()">Yes of course!</button>
+  <button class="no" id="noBtn">Hmm…</button>
+
+  <p id="message"></p>
+  <p id="countdown"></p>
+</div>
+
+<script>
+// PLAY MUSIC WHEN SHE CLICKS ANYWHERE
+document.body.addEventListener("click", () => {
+  document.getElementById("bgMusic").play();
+}, { once: true });
+
+
+// YES BUTTON
+function yesClicked() {
+  document.getElementById("message").innerText =
+    "Yay!! You make me so happy. Thank you for choosing me 😭💘";
+
+  // CONFETTI HEARTS
+  for (let i = 0; i < 25; i++) {
+    const heart = document.createElement("div");
+    heart.innerText = "💖";
+    heart.className = "heart";
+    heart.style.left = Math.random() * window.innerWidth + "px";
+    heart.style.top = Math.random() * window.innerHeight + "px";
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 3000);
+  }
+}
+
+
+// MOVING NO BUTTON
+const noBtn = document.getElementById("noBtn");
+noBtn.addEventListener("mouseover", () => {
+  const x = Math.floor(Math.random() * 250);
+  const y = Math.floor(Math.random() * 200);
+  noBtn.style.left = x + "px";
+  noBtn.style.top = y + "px";
+});
+
+
+// COUNTDOWN TO FEB 15
+const countdown = document.getElementById("countdown");
+const targetDate = new Date("February 15, 2026 00:00:00").getTime();
+
+const timer = setInterval(() => {
+  const now = new Date().getTime();
+  const distance = targetDate - now;
+
+  if (distance < 0) {
+    countdown.innerText = "Happy 6th monthsary!! 💕";
+    clearInterval(timer);
+    return;
+  }
+
+  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((distance / (1000 * 60 * 60)) % 24);
+  const minutes = Math.floor((distance / (1000 * 60)) % 60);
+
+  countdown.innerText =
+    "Countdown to our 6th monthsary: " +
+    days + "d " + hours + "h " + minutes + "m";
+}, 1000);
+</script>
+
+</body>
+</html>
